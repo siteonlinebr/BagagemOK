@@ -1,0 +1,6 @@
+{
+  "name": "BagagemOK",
+  "description": "Plataforma de consulta e verificação de regras de bagagem aérea para voos no Brasil. Descubra o que pode levar na mala de mão e despachada na LATAM, GOL e Azul conforme normas da ANAC.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
