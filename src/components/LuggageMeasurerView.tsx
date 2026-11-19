@@ -33,6 +33,36 @@ export const LuggageMeasurerView: React.FC = () => {
   const [depthInput, setDepthInput] = useState<number>(25);
   const [weightInput, setWeightInput] = useState<number>(10.5);
 
+  // Convert values cleanly when switching length units
+  const handleLengthUnitChange = (newUnit: 'cm' | 'in' | 'm') => {
+    if (newUnit === lengthUnit) return;
+    const toCm = (val: number) => {
+      if (lengthUnit === 'in') return val * 2.54;
+      if (lengthUnit === 'm') return val * 100;
+      return val;
+    };
+    const fromCm = (cmVal: number) => {
+      if (newUnit === 'in') return Number((cmVal / 2.54).toFixed(1));
+      if (newUnit === 'm') return Number((cmVal / 100).toFixed(2));
+      return Number(cmVal.toFixed(1));
+    };
+    setHeightInput(fromCm(toCm(heightInput)));
+    setWidthInput(fromCm(toCm(widthInput)));
+    setDepthInput(fromCm(toCm(depthInput)));
+    setLengthUnit(newUnit);
+  };
+
+  // Convert weight cleanly when switching weight units
+  const handleWeightUnitChange = (newUnit: 'kg' | 'lb') => {
+    if (newUnit === weightUnit) return;
+    if (newUnit === 'lb') {
+      setWeightInput(Number((weightInput / 0.453592).toFixed(1)));
+    } else {
+      setWeightInput(Number((weightInput * 0.453592).toFixed(1)));
+    }
+    setWeightUnit(newUnit);
+  };
+
   // Quick preset sizes
   const applyPreset = (preset: 'padrao_mao' | 'mochila_laptop' | 'mala_media_despachada' | 'mala_grande_despachada') => {
     if (preset === 'padrao_mao') {
@@ -108,6 +138,10 @@ export const LuggageMeasurerView: React.FC = () => {
   }, [heightCm, widthCm, depthCm, weightKg, airlineCode, luggageType, tariff]);
 
   const currentAirline = AIRLINES_DATA[airlineCode];
+  const dynamicHandLimitKg =
+    tariff === 'premium' && currentAirline.handLuggage.premiumWeightKg
+      ? currentAirline.handLuggage.premiumWeightKg
+      : currentAirline.handLuggage.maxWeightKg;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -131,28 +165,32 @@ export const LuggageMeasurerView: React.FC = () => {
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="text-slate-500 font-medium">Testar medidas comuns:</span>
         <button
+          type="button"
           onClick={() => applyPreset('padrao_mao')}
           className="px-3 py-1.5 rounded-lg bg-white border border-[#DCE5F0] hover:border-[#1976F3] text-[#172B46] font-medium transition-colors cursor-pointer"
         >
-          Mala de Bordo 10 kg (55x35x25)
+          Mala de Bordo 11,5 kg (55×35×25)
         </button>
         <button
+          type="button"
           onClick={() => applyPreset('mochila_laptop')}
           className="px-3 py-1.5 rounded-lg bg-white border border-[#DCE5F0] hover:border-[#1976F3] text-[#172B46] font-medium transition-colors cursor-pointer"
         >
-          Mochila Item Pessoal (42x32x18)
+          Mochila Item Pessoal (42×32×18)
         </button>
         <button
+          type="button"
           onClick={() => applyPreset('mala_media_despachada')}
           className="px-3 py-1.5 rounded-lg bg-white border border-[#DCE5F0] hover:border-[#1976F3] text-[#172B46] font-medium transition-colors cursor-pointer"
         >
-          Mala Média Despachada 21.5 kg
+          Mala Média Despachada 21,5 kg
         </button>
         <button
+          type="button"
           onClick={() => applyPreset('mala_grande_despachada')}
           className="px-3 py-1.5 rounded-lg bg-white border border-[#DCE5F0] hover:border-rose-400 text-rose-700 font-medium transition-colors cursor-pointer"
         >
-          Mala Grande c/ Excesso de Peso (24.2 kg)
+          Mala Grande c/ Excesso de Peso (24,2 kg)
         </button>
       </div>
 
@@ -160,7 +198,7 @@ export const LuggageMeasurerView: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Form: Parameters (7 cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-[#DCE5F0] p-6 shadow-sm space-y-6">
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-[#DCE5F0] p-5 sm:p-6 shadow-sm space-y-6">
           
           {/* 1. Seleção de Tipo de Bagagem */}
           <div className="space-y-2">
@@ -177,7 +215,7 @@ export const LuggageMeasurerView: React.FC = () => {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Bagagem de mão (10 kg)
+                Bagagem de mão ({dynamicHandLimitKg} kg)
               </button>
               <button
                 type="button"
@@ -209,16 +247,15 @@ export const LuggageMeasurerView: React.FC = () => {
             <label className="text-sm font-bold text-[#102746] block">
               2. Qual a companhia aérea do seu voo?
             </label>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {(['LATAM', 'GOL', 'AZUL'] as const).map((code) => {
-                const air = AIRLINES_DATA[code];
                 const isSelected = airlineCode === code;
                 return (
                   <button
                     key={code}
                     type="button"
                     onClick={() => setAirlineCode(code)}
-                    className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
+                    className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${
                       isSelected
                         ? 'border-[#1976F3] ring-2 ring-[#1976F3]/20 bg-blue-50/50'
                         : 'border-[#DCE5F0] hover:border-slate-300 bg-white'
@@ -227,8 +264,8 @@ export const LuggageMeasurerView: React.FC = () => {
                     <span className="font-bold text-sm block text-[#102746]">
                       {code}
                     </span>
-                    <span className="text-[11px] text-slate-500 truncate block">
-                      {code === 'LATAM' ? 'Airlines (12 kg cabine)' : code === 'GOL' ? 'Linhas (12 kg cabine)' : 'Linhas (10 kg cabine)'}
+                    <span className="text-[11px] text-slate-500 block leading-tight mt-0.5">
+                      {code === 'LATAM' ? '12 kg cabine' : code === 'GOL' ? '12 kg cabine' : '10 kg cabine'}
                     </span>
                   </button>
                 );
@@ -238,7 +275,7 @@ export const LuggageMeasurerView: React.FC = () => {
 
           {/* 3. Seleção de Tarifa Contratada (Requisito Relatório 2026) */}
           <div className="space-y-2 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-1">
               <label className="text-xs font-bold text-[#102746]">
                 3. Qual a sua tarifa contratada?
               </label>
@@ -286,32 +323,34 @@ export const LuggageMeasurerView: React.FC = () => {
             </div>
           </div>
 
-          {/* 3. Unidades de Medida */}
-          <div className="flex flex-wrap items-center justify-between gap-4 p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#172B46]">
-              <span>Unidade de dimensão:</span>
+          {/* Unidades de Medida */}
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#172B46]">
+              <span>Dimensão:</span>
               <div className="flex bg-white rounded-lg p-0.5 border border-slate-200">
                 {(['cm', 'in', 'm'] as const).map((unit) => (
                   <button
                     key={unit}
-                    onClick={() => setLengthUnit(unit)}
+                    type="button"
+                    onClick={() => handleLengthUnitChange(unit)}
                     className={`px-2.5 py-1 text-xs rounded-md font-medium cursor-pointer ${
                       lengthUnit === unit ? 'bg-[#1976F3] text-white' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    {unit === 'cm' ? 'cm (centímetros)' : unit === 'in' ? 'pol (polegadas)' : 'm (metros)'}
+                    {unit === 'cm' ? 'cm' : unit === 'in' ? 'pol' : 'm'}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#172B46]">
-              <span>Unidade de peso:</span>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#172B46]">
+              <span>Peso:</span>
               <div className="flex bg-white rounded-lg p-0.5 border border-slate-200">
                 {(['kg', 'lb'] as const).map((unit) => (
                   <button
                     key={unit}
-                    onClick={() => setWeightUnit(unit)}
+                    type="button"
+                    onClick={() => handleWeightUnitChange(unit)}
                     className={`px-2.5 py-1 text-xs rounded-md font-medium cursor-pointer ${
                       weightUnit === unit ? 'bg-[#1976F3] text-white' : 'text-slate-600 hover:text-slate-900'
                     }`}
@@ -326,7 +365,7 @@ export const LuggageMeasurerView: React.FC = () => {
           {/* 4. Campos de Dimensão e Peso */}
           <div className="space-y-4">
             <label className="text-sm font-bold text-[#102746] block">
-              3. Insira as medidas com rodinhas e alça inclusas:
+              4. Insira as medidas com rodinhas e alça inclusas:
             </label>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -337,10 +376,10 @@ export const LuggageMeasurerView: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  step="0.1"
-                  min="1"
+                  step={lengthUnit === 'm' ? '0.01' : '0.1'}
+                  min="0"
                   value={heightInput}
-                  onChange={(e) => setHeightInput(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setHeightInput(Math.max(0, parseFloat(e.target.value) || 0))}
                   className="w-full px-3 py-2 bg-slate-50 focus:bg-white border border-slate-300 rounded-xl font-semibold text-[#102746] focus:border-[#1976F3] focus:ring-2 focus:ring-[#1976F3]/15 outline-hidden"
                 />
               </div>
@@ -352,10 +391,10 @@ export const LuggageMeasurerView: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  step="0.1"
-                  min="1"
+                  step={lengthUnit === 'm' ? '0.01' : '0.1'}
+                  min="0"
                   value={widthInput}
-                  onChange={(e) => setWidthInput(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setWidthInput(Math.max(0, parseFloat(e.target.value) || 0))}
                   className="w-full px-3 py-2 bg-slate-50 focus:bg-white border border-slate-300 rounded-xl font-semibold text-[#102746] focus:border-[#1976F3] focus:ring-2 focus:ring-[#1976F3]/15 outline-hidden"
                 />
               </div>
@@ -367,10 +406,10 @@ export const LuggageMeasurerView: React.FC = () => {
                 </label>
                 <input
                   type="number"
-                  step="0.1"
-                  min="1"
+                  step={lengthUnit === 'm' ? '0.01' : '0.1'}
+                  min="0"
                   value={depthInput}
-                  onChange={(e) => setDepthInput(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setDepthInput(Math.max(0, parseFloat(e.target.value) || 0))}
                   className="w-full px-3 py-2 bg-slate-50 focus:bg-white border border-slate-300 rounded-xl font-semibold text-[#102746] focus:border-[#1976F3] focus:ring-2 focus:ring-[#1976F3]/15 outline-hidden"
                 />
               </div>
@@ -383,16 +422,16 @@ export const LuggageMeasurerView: React.FC = () => {
                 <input
                   type="number"
                   step="0.1"
-                  min="0.1"
+                  min="0"
                   value={weightInput}
-                  onChange={(e) => setWeightInput(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setWeightInput(Math.max(0, parseFloat(e.target.value) || 0))}
                   className="w-full px-3 py-2 bg-slate-50 focus:bg-white border border-slate-300 rounded-xl font-semibold text-[#102746] focus:border-[#1976F3] focus:ring-2 focus:ring-[#1976F3]/15 outline-hidden"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-slate-500">
-              <Info className="w-4 h-4 text-slate-400 shrink-0" />
+            <div className="flex items-start gap-2 text-xs text-slate-500">
+              <Info className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
               <span>Dica: meça sempre a mala já cheia e com zíperes fechados. O gabarito no aeroporto é uma caixa rígida de metal.</span>
             </div>
           </div>
@@ -402,11 +441,11 @@ export const LuggageMeasurerView: React.FC = () => {
         {/* Right Card: Result & Diagnostic (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
           
-          <div className="bg-white rounded-2xl border border-[#DCE5F0] p-6 shadow-md space-y-6">
+          <div className="bg-white rounded-2xl border border-[#DCE5F0] p-5 sm:p-6 shadow-md space-y-6">
             
             {/* Header Result Badge */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   Diagnóstico Oficial
                 </span>
@@ -456,7 +495,7 @@ export const LuggageMeasurerView: React.FC = () => {
               {luggageType !== 'despachada' ? (
                 <div className="space-y-2 text-xs">
                   {/* Altura */}
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50">
+                  <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-50">
                     <span className="text-slate-600 font-medium">Altura:</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#102746]">{heightCm} cm</span>
@@ -470,7 +509,7 @@ export const LuggageMeasurerView: React.FC = () => {
                   </div>
 
                   {/* Largura */}
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50">
+                  <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-50">
                     <span className="text-slate-600 font-medium">Largura:</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#102746]">{widthCm} cm</span>
@@ -484,7 +523,7 @@ export const LuggageMeasurerView: React.FC = () => {
                   </div>
 
                   {/* Profundidade */}
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50">
+                  <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-50">
                     <span className="text-slate-600 font-medium">Profundidade:</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#102746]">{depthCm} cm</span>
@@ -497,9 +536,9 @@ export const LuggageMeasurerView: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Peso */}
-                  {luggageType === 'mao' && (
-                    <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50">
+                  {/* Peso (Mala de mão e Item pessoal quando a cia define limite de peso) */}
+                  {(luggageType === 'mao' || compliance.limitWeight > 0) && (
+                    <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-50">
                       <span className="text-slate-600 font-medium">Peso Total:</span>
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-[#102746]">{weightKg} kg</span>
@@ -516,7 +555,7 @@ export const LuggageMeasurerView: React.FC = () => {
               ) : (
                 <div className="space-y-2 text-xs">
                   {/* Soma Linear */}
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50">
+                  <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-50">
                     <span className="text-slate-600 font-medium">Soma Linear (A + L + P):</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#102746]">{compliance.linearSum.toFixed(1)} cm</span>
@@ -530,7 +569,7 @@ export const LuggageMeasurerView: React.FC = () => {
                   </div>
 
                   {/* Peso Despachada */}
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50">
+                  <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-50">
                     <span className="text-slate-600 font-medium">Peso por Peça:</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#102746]">{weightKg} kg</span>
@@ -548,12 +587,12 @@ export const LuggageMeasurerView: React.FC = () => {
 
             {/* Official Source Link */}
             <div className="pt-4 border-t border-slate-100 text-xs flex items-center justify-between text-slate-500">
-              <span>Fonte: Regras oficiais {currentAirline.code}</span>
+              <span>Fonte: {currentAirline.code} • Verificado em {currentAirline.lastVerifiedDate}</span>
               <a
                 href={currentAirline.officialBagPageUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-[#1976F3] font-semibold hover:underline"
+                className="flex items-center gap-1 text-[#1976F3] font-semibold hover:underline shrink-0"
               >
                 <span>Página da Cia</span>
                 <ExternalLink className="w-3.5 h-3.5" />

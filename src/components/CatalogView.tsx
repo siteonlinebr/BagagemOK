@@ -1,27 +1,36 @@
-import React, { useState, useMemo } from 'react';
-import { Search, Filter, Luggage, ShieldCheck, ChevronDown, Check, Zap } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Search } from 'lucide-react';
 import { AirlineCode, FlightType, ItemCategory, ItemStatus, LuggageItem, LuggageLocation } from '../types';
-import { LUGGAGE_ITEMS } from '../data/items';
 import { searchLuggageItems } from '../utils/rulesEngine';
 import { ItemResultCard } from './ItemResultCard';
 
 interface CatalogViewProps {
   initialQuery?: string;
+  initialCategory?: ItemCategory | 'todas';
   onOpenBatteryCalc: (mah?: number) => void;
   onAddToPackingList: (item: LuggageItem, loc: 'mao' | 'despachada') => void;
 }
 
 export const CatalogView: React.FC<CatalogViewProps> = ({
   initialQuery = '',
+  initialCategory = 'todas',
   onOpenBatteryCalc,
   onAddToPackingList,
 }) => {
   const [query, setQuery] = useState(initialQuery);
-  const [selectedCategory, setSelectedCategory] = useState<ItemCategory | 'todas'>('todas');
+  const [selectedCategory, setSelectedCategory] = useState<ItemCategory | 'todas'>(initialCategory);
   const [flightType, setFlightType] = useState<FlightType>('domestico');
   const [airline, setAirline] = useState<AirlineCode>('TODAS');
   const [location, setLocation] = useState<LuggageLocation>('ambos');
   const [statusFilter, setStatusFilter] = useState<ItemStatus | 'todos'>('todos');
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
+
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
 
   const categories: { id: ItemCategory | 'todas'; label: string }[] = [
     { id: 'todas', label: 'Todos os itens' },
@@ -95,7 +104,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
         </div>
 
         {/* Secondary Context Filters */}
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-100">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 border-t border-slate-100">
           
           {/* Categoria */}
           <div className="space-y-1">

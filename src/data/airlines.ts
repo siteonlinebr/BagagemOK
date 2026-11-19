@@ -61,7 +61,7 @@ export const AIRLINES_DATA: Record<'LATAM' | 'GOL' | 'AZUL', AirlineLuggageLimit
       inFlightUsageAllowed: false, // PROIBIDO usar a bordo
       rechargingInFlightAllowed: false, // PROIBIDO recarregar a bordo
       storageInstruction: 'DEVE ficar acessível sob o assento dianteiro. PROIBIDO guardar no compartimento superior (overhead bin).',
-      summary: 'Máximo 2 unidades de até 100 Wh cada. Exclusivamente na cabine sob o assento. Proibido usar para carregar dispositivos e proibido ligar nas tomadas do avião. Se a mala for enviada ao porão no portão, retire o power bank imediatamente.',
+      summary: 'Máximo 2 unidades de até 100 Wh cada. Exclusivamente na cabine sob o assento (proibido no bagageiro superior). A LATAM proíbe usar power banks para carregar outros dispositivos durante o voo e proíbe conectar às tomadas da aeronave. Se a mala for enviada ao porão no portão, retire o power bank imediatamente.',
     },
     specialNotes: [
       'LATAM atualizou a franquia da mala de bordo para 12 kg na classe Economy e 16 kg na Premium.',
@@ -69,7 +69,7 @@ export const AIRLINES_DATA: Record<'LATAM' | 'GOL' | 'AZUL', AirlineLuggageLimit
       'Power banks NUNCA podem ser colocados no bagageiro superior (bin): devem permanecer sob o assento dianteiro para rápida identificação em caso de superaquecimento.',
     ],
     officialBagPageUrl: 'https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/bagagem',
-    lastVerifiedDate: '10/11/2026',
+    lastVerifiedDate: '19/11/2026',
   },
 
   GOL: {
@@ -124,22 +124,22 @@ export const AIRLINES_DATA: Record<'LATAM' | 'GOL' | 'AZUL', AirlineLuggageLimit
     },
     powerBank2026Status: {
       status: 'detalhe_a_confirmar',
-      statusLabel: 'Detalhe a confirmar (Vigente desde 04/05/2026)',
+      statusLabel: 'Inconsistência documental — Detalhe a confirmar',
       effectiveDate: '04/05/2026',
-      maxUnitsAllowed: 'Necessita confirmação (Regra geral 20 baterias sobressalentes vs limite OACI de 2 power banks)',
+      maxUnitsAllowed: 'Inconsistência documental (Regra geral cita 20 baterias vs limite OACI de 2 power banks)',
       allowedLocations: 'Exclusivamente na cabine / bagagem de mão',
       inFlightUsageAllowed: false,
       rechargingInFlightAllowed: false,
       storageInstruction: 'Devem ser mantidos na cabine com terminais protegidos contra curto-circuito.',
-      summary: 'GOL informa novas regras de baterias desde 04/05/2026. Power banks vão na cabine até 100 Wh (100 a 160 Wh com autorização). Ponto de atenção: a página da GOL ainda não detalhou explicitamente a limitação individual de 2 unidades prevista no Adendo nº 1 da OACI / Portaria 21/SPO.',
+      summary: 'A GOL informa novas regras de baterias desde 04/05/2026 (na cabine até 100 Wh; 100–160 Wh com autorização). Ponto de atenção: a documentação oficial apresenta inconsistência entre o limite geral de baterias sobressalentes (até 20) e as regras específicas de power banks (limite OACI/ANAC de 2 unidades). Confirme antes de embarcar.',
     },
     specialNotes: [
       'GOL permite mala de mão de até 12 kg (acima dos 10 kg regulamentares da ANAC).',
-      'Na tarifa Basic, apenas o item pessoal (mochila/bolsa) é gratuito. A mala de 12 kg precisa ser comprada.',
+      'Na tarifa Basic, apenas o item pessoal (mochila/bolsa até 10 kg) é gratuito. A mala de 12 kg precisa ser comprada.',
       'Power banks são proibidos no porão da aeronave e devem viajar na cabine com terminais isolados.',
     ],
     officialBagPageUrl: 'https://www.voegol.com.br/informacoes/bagagem',
-    lastVerifiedDate: '10/11/2026',
+    lastVerifiedDate: '19/11/2026',
   },
 
   AZUL: {
@@ -193,22 +193,22 @@ export const AIRLINES_DATA: Record<'LATAM' | 'GOL' | 'AZUL', AirlineLuggageLimit
     },
     powerBank2026Status: {
       status: 'confirmacao_pendente',
-      statusLabel: 'Confirmação pendente de publicação detalhada',
-      effectiveDate: 'Pendente de atualização específica',
-      maxUnitsAllowed: 'Máx 2 (Recomendação mandatória OACI 2026 / Portaria 21/SPO)',
+      statusLabel: 'Confirmação documental pendente',
+      effectiveDate: 'Pendente de atualização detalhada',
+      maxUnitsAllowed: 'Máx 2 (Regra internacional OACI desde 27/03/2026)',
       allowedLocations: 'Bagagem de mão (proibido despachar)',
       inFlightUsageAllowed: false,
       rechargingInFlightAllowed: false,
       storageInstruction: 'Levar consigo na cabine com proteção contra curto-circuito.',
-      summary: 'A página oficial de bagagem da Azul apresenta dimensões e tarifas, mas não possui seção detalhada específica sobre o novo teto de 2 power banks da OACI/ANAC. Princípio BagagemOK: ausência de informação não é permissão irrestrita. Consulte a Azul antes de embarcar.',
+      summary: 'Ainda falta confirmação documental detalhada da política operacional da Azul para o novo limite de 2 power banks da OACI/ANAC. Princípio BagagemOK: ausência de informação não é permissão irrestrita. Consulte a Azul antes de embarcar.',
     },
     specialNotes: [
       'Azul mantém o limite padrão de 10 kg na bagagem de mão (aeronaves menores como Caravan da Azul Conecta têm restrições adicionais de espaço).',
       'A franquia de bagagem despachada depende da tarifa, rota e categoria do programa TudoAzul.',
-      'A regra internacional OACI de máximo 2 power banks e não utilização a bordo aplica-se por determinação de segurança operacional.',
+      'A regra internacional OACI (desde 27/03/2026) limita a 2 power banks, proíbe recarregar em voo e recomenda não usá-los para carregar outros aparelhos a bordo.',
     ],
     officialBagPageUrl: 'https://www.voeazul.com.br/br/pt/sua-viagem/planeje-sua-viagem/bagagem',
-    lastVerifiedDate: '10/11/2026',
+    lastVerifiedDate: '19/11/2026',
   },
 };
 
@@ -224,11 +224,11 @@ export const ANAC_STANDARDS = {
   checkedStandardMaxKg: 23,
   checkedStandardSumDimensionsCm: 158,
   officialUrl: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-  lastVerifiedDate: '10/11/2026',
-  monitoringReportDate: '10/11/2026',
+  lastVerifiedDate: '19/11/2026',
+  monitoringReportDate: '19/11/2026',
   coreRulesSummary: [
     'Todo passageiro em voo com partida no Brasil tem direito a pelo menos 1 volume de bagagem de mão de até 10 kg gratuitamente, além de um item pessoal, conforme Resolução nº 400/2016.',
     'A LATAM e a GOL ampliaram voluntariamente a franquia de peso da mala de bordo para 12 kg (LATAM permite até 16 kg nas classes Premium).',
-    'A OACI aprovou o Adendo nº 1 ao Doc 9284 (em vigor desde 27/03/2026), e a ANAC aprovou a revisão M da IS 175-001 (Portaria 21/SPO de 01/04/2026, DOU 06/04/2026): limite estrito de MÁXIMO 2 POWER BANKS por passageiro, PROIBIDO recarregar a bordo e PROIBIDO usar para carregar dispositivos em voo!',
+    'A OACI (Adendo nº 1 ao Doc 9284, desde 27/03/2026) e a ANAC (Portaria 21/SPO / IS 175-001M): limite de 2 power banks por passageiro até 100 Wh (100–160 Wh com autorização), somente na bagagem de mão, proibição de recarregar em voo e recomendação da OACI (proibição expressa na LATAM) de não usá-los para carregar outros aparelhos durante o voo.',
   ],
 };

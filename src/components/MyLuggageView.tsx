@@ -24,9 +24,10 @@ import { LUGGAGE_ITEMS } from '../data/items';
 
 interface MyLuggageViewProps {
   onSearchItemName: (name: string) => void;
+  onDataChange?: () => void;
 }
 
-export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }) => {
+export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName, onDataChange }) => {
   const [queries, setQueries] = useState<{ id: string; query: string; timestamp: number }[]>([]);
   const [checklist, setChecklist] = useState<PackingListItem[]>([]);
   const [newItemName, setNewItemName] = useState('');
@@ -40,6 +41,7 @@ export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }
   const handleRemoveQuery = (id: string) => {
     removeSavedQuery(id);
     setQueries(getSavedQueries());
+    onDataChange?.();
   };
 
   const handleTogglePacked = (id: string) => {
@@ -54,6 +56,7 @@ export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }
     const updated = checklist.filter((item) => item.id !== id);
     setChecklist(updated);
     savePackingChecklist(updated);
+    onDataChange?.();
   };
 
   const handleAddItem = (e: React.FormEvent) => {
@@ -67,7 +70,7 @@ export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }
     let status: PackingListItem['status'] = 'permitido';
 
     if (isPowerBank && newItemLocation === 'despachada') {
-      warningNote = 'ALERTA DE SEGURANÇA: Baterias e power banks são proibidos no porão pela ANAC! Mude para bagagem de mão.';
+      warningNote = 'ALERTA DE SEGURANÇA: Baterias e power banks são proibidos no porão pela ANAC/OACI! Mude para bagagem de mão.';
       status = 'nao_permitido';
     }
 
@@ -85,6 +88,7 @@ export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }
     setChecklist(updated);
     savePackingChecklist(updated);
     setNewItemName('');
+    onDataChange?.();
   };
 
   const handlePrint = () => {
@@ -163,7 +167,7 @@ export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }
                 value={newItemLocation}
                 onChange={(e) => setNewItemLocation(e.target.value as 'mao' | 'despachada')}
                 aria-label="Local da Bagagem"
-                className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-[#172B46] focus:outline-hidden"
+                className="flex-1 sm:flex-none px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-[#172B46] focus:outline-hidden"
               >
                 <option value="mao">Na mala de mão</option>
                 <option value="despachada">Na despachada</option>
@@ -180,12 +184,12 @@ export const MyLuggageView: React.FC<MyLuggageViewProps> = ({ onSearchItemName }
 
           {/* Section 1: Bagagem de Mão */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[#1976F3] flex items-center gap-1.5">
                 <Luggage className="w-4 h-4" />
                 <span>Bagagem de mão (Cabine) — {handItems.length} itens</span>
               </span>
-              <span className="text-[11px] text-slate-400">Limite de até 10 kg</span>
+              <span className="text-[11px] text-slate-400">10 kg (Azul) / 12 kg (LATAM e GOL)</span>
             </div>
 
             <div className="divide-y divide-slate-100 rounded-xl border border-slate-200 overflow-hidden">

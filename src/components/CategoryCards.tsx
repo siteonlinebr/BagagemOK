@@ -81,7 +81,7 @@ export const CategoryCards: React.FC<CategoryCardsProps> = ({
                   : 'border-[#DCE5F0] hover:border-[#1976F3]/50'
               }`}
             >
-              <div className="flex items-center gap-3.5">
+              <div className="flex items-center gap-3.5 min-w-0 flex-1 pr-2">
                 {/* Visual Icon Container with 3D product render */}
                 <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden p-1 group-hover:scale-105 transition-transform duration-200 shadow-xs shrink-0">
                   {cat.image ? (
@@ -95,11 +95,11 @@ export const CategoryCards: React.FC<CategoryCardsProps> = ({
                     <span className="text-2xl">{cat.emoji}</span>
                   )}
                 </div>
-                <div>
-                  <h3 className="text-base font-bold font-heading text-[#102746] group-hover:text-[#1976F3] transition-colors">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-base font-bold font-heading text-[#102746] group-hover:text-[#1976F3] transition-colors truncate">
                     {cat.title}
                   </h3>
-                  <p className="text-xs text-[#718096] truncate max-w-[130px] sm:max-w-[140px]">
+                  <p className="text-xs text-[#718096] truncate">
                     {cat.count}
                   </p>
                 </div>

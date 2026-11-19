@@ -68,19 +68,90 @@ export const GuidesView: React.FC<GuidesViewProps> = ({
           </ul>
         </div>
 
-        {/* Article Content */}
-        <div className="prose prose-slate max-w-none text-slate-800 text-sm sm:text-base leading-relaxed space-y-4">
-          <div
-            className="space-y-4 leading-relaxed"
-            dangerouslySetInnerHTML={{
-              __html: selectedGuide.contentMarkdown
-                .replace(/### (.*?)\n/g, '<h3 class="text-xl font-bold font-heading text-[#102746] mt-6 mb-2">$1</h3>')
-                .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[#102746]">$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em class="italic text-slate-600">$1</em>')
-                .replace(/\n\n/g, '<p class="text-slate-700 leading-relaxed">')
-                .replace(/- (.*?)\n/g, '<li class="ml-4 list-disc text-slate-700">$1</li>'),
-            }}
-          />
+        {/* Article Content — Structured Safe Renderer */}
+        <div className="bg-white rounded-2xl border border-[#DCE5F0] p-5 sm:p-8 space-y-4 text-slate-800 text-sm sm:text-base leading-relaxed">
+          {(() => {
+            const renderInline = (text: string) => {
+              const parts = text.split(/(\*\*.*?\*\*|\*[^*]+?\*)/g);
+              return parts.map((part, i) => {
+                if (part.startsWith('**') && part.endsWith('**')) {
+                  return <strong key={i} className="font-bold text-[#102746]">{part.slice(2, -2)}</strong>;
+                }
+                if (part.startsWith('*') && part.endsWith('*')) {
+                  return <em key={i} className="italic text-slate-600">{part.slice(1, -1)}</em>;
+                }
+                return <React.Fragment key={i}>{part}</React.Fragment>;
+              });
+            };
+
+            const blocks = selectedGuide.contentMarkdown.trim().split(/\n\s*\n/);
+            return blocks.map((block, idx) => {
+              const lines = block.split('\n').map((l) => l.trim()).filter(Boolean);
+              if (lines.length === 0) return null;
+
+              const elements: React.ReactNode[] = [];
+              let listItems: { type: 'ul' | 'ol'; text: string }[] = [];
+
+              const flushList = (keySuffix: string) => {
+                if (listItems.length === 0) return;
+                const isOrdered = listItems[0].type === 'ol';
+                const Tag = isOrdered ? 'ol' : 'ul';
+                elements.push(
+                  <Tag
+                    key={`list-${idx}-${keySuffix}`}
+                    className={`space-y-2 pl-5 text-slate-700 ${isOrdered ? 'list-decimal' : 'list-disc'}`}
+                  >
+                    {listItems.map((li, liIdx) => (
+                      <li key={liIdx} className="leading-relaxed">
+                        {renderInline(li.text)}
+                      </li>
+                    ))}
+                  </Tag>
+                );
+                listItems = [];
+              };
+
+              lines.forEach((line, lIdx) => {
+                if (line.startsWith('### ')) {
+                  flushList(`h-${lIdx}`);
+                  elements.push(
+                    <h3
+                      key={`h-${idx}-${lIdx}`}
+                      className="text-lg sm:text-xl font-bold font-heading text-[#102746] pt-3 first:pt-0"
+                    >
+                      {line.replace(/^###\s+/, '')}
+                    </h3>
+                  );
+                } else if (line.startsWith('> ')) {
+                  flushList(`q-${lIdx}`);
+                  elements.push(
+                    <div
+                      key={`q-${idx}-${lIdx}`}
+                      className="p-3.5 sm:p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-[#102746] text-xs sm:text-sm font-medium"
+                    >
+                      {renderInline(line.replace(/^>\s+/, ''))}
+                    </div>
+                  );
+                } else if (line.startsWith('- ')) {
+                  if (listItems.length > 0 && listItems[0].type !== 'ul') flushList(`sw-${lIdx}`);
+                  listItems.push({ type: 'ul', text: line.replace(/^-\s+/, '') });
+                } else if (/^\d+\.\s+/.test(line)) {
+                  if (listItems.length > 0 && listItems[0].type !== 'ol') flushList(`sw-${lIdx}`);
+                  listItems.push({ type: 'ol', text: line.replace(/^\d+\.\s+/, '') });
+                } else {
+                  flushList(`p-${lIdx}`);
+                  elements.push(
+                    <p key={`p-${idx}-${lIdx}`} className="text-slate-700 leading-relaxed">
+                      {renderInline(line)}
+                    </p>
+                  );
+                }
+              });
+
+              flushList('end');
+              return <div key={idx} className="space-y-3">{elements}</div>;
+            });
+          })()}
         </div>
 
         {/* Related Tool CTAs */}

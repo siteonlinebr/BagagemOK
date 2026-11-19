@@ -12,14 +12,14 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
     isBatteryOrPowerBank: true,
     handLuggage: {
       status: 'permitido_com_condicoes',
-      summary: 'Permitido na cabine até 2 unidades de no máximo 100 Wh cada. PROIBIDO USAR OU RECARREGAR A BORDO!',
+      summary: 'Permitido na cabine: máximo 2 unidades de até 100 Wh cada. Proibido recarregar em voo (LATAM também proíbe usar para carregar aparelhos).',
       conditions: [
-        'MÁXIMO DE 2 UNIDADES POR PASSAGEIRO (Nova regra mandatória aprovada pela OACI no Adendo nº 1 ao Doc 9284 e implementada pela ANAC na Portaria Regulatória nº 21/SPO / IS 175-001M).',
-        'TRANSPORTE EXCLUSIVO NA CABINE: Nunca despachar no porão.',
-        'PROIBIDO RECARREGAR O POWER BANK A BORDO: Não pode ser conectado a nenhuma tomada ou porta USB da aeronave.',
-        'PROIBIDO UTILIZAR O POWER BANK PARA ALIMENTAR OUTROS DISPOSITIVOS DURANTE O VOO (Regra de segurança internacional para evitar superaquecimento na cabine).',
-        'Limite geral: até 100 Wh (aprox. 27.000 mAh a 3.7V) liberado; entre 100 e 160 Wh necessita de autorização prévia da companhia aérea; acima de 160 Wh é proibido.',
-        'Devem ser protegidos individualmente contra curto-circuitos (fita isolante nos terminais ou estojo próprio).',
+        'MÁXIMO DE 2 UNIDADES POR PASSAGEIRO (Regra internacional da OACI aplicável desde 27/03/2026 e implementada pela ANAC na Portaria nº 21/SPO / IS 175-001M).',
+        'TRANSPORTE EXCLUSIVO NA BAGAGEM DE MÃO: Nunca na bagagem despachada.',
+        'PROIBIDO RECARREGAR DURANTE O VOO: Não pode ser conectado a tomadas ou portas USB da aeronave.',
+        'USO PARA CARREGAR OUTROS APARELHOS: A OACI recomenda não utilizá-los durante o voo; a LATAM proíbe expressamente alimentar outros dispositivos a bordo.',
+        'Limite de energia: até 100 Wh (aprox. 27.000 mAh a 3.7V) permitido; entre 100 e 160 Wh requer autorização da companhia aérea; acima de 160 Wh é proibido.',
+        'Devem ser protegidos individualmente contra curto-circuitos (estojo próprio, embalagem individual ou proteção nos terminais).',
         'As informações de capacidade em Wh ou mAh e Volts devem estar legíveis no corpo do dispositivo.',
       ],
       numericLimits: {
@@ -27,69 +27,69 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
         maxMah: 27000,
       },
       warnings: [
-        'LATAM: Obrigatoriamente posicionado sob o assento à sua frente. É PROIBIDO guardar o power bank no compartimento superior (overhead bin) na LATAM!',
+        'LATAM: Exige armazenamento acessível sob o assento à frente (proibido no compartimento superior) e proíbe usar para carregar outros dispositivos em voo.',
         'Se a sua mala de mão for despachada de última hora no portão por falta de espaço no avião, você é OBRIGADO a retirar o power bank e levá-lo consigo no assento.',
-        'Dispositivos sem selo de fábrica legível com Wh/mAh serão retidos no raio-X.',
+        'Dispositivos sem selo de fábrica legível com Wh/mAh podem ser retidos no raio-X.',
       ],
     },
     checkedLuggage: {
       status: 'nao_permitido',
       summary: 'Terminantemente PROIBIDO na bagagem despachada.',
       conditions: [
-        'Proibição absoluta da ANAC (RBAC 175 e Portaria 21/SPO) e da OACI para prevenção de incêndios e explosões por fuga térmica no compartimento de carga despressurizado.',
+        'Proibição absoluta da ANAC (RBAC 175 e Portaria 21/SPO) e da OACI para prevenção de incêndios e explosões por fuga térmica no compartimento de carga.',
       ],
       warnings: [
         'Se identificado no scanner de porão, a mala será retida, aberta pelos agentes de segurança e o item apreendido.',
       ],
     },
     airlineNotes: {
-      LATAM: 'LATAM (Regra detalhada publicada desde abril/2026): Máximo 2 power banks de até 100 Wh. Apenas na cabine, OBRIGATORIAMENTE acessíveis sob o assento à frente (proibido colocar no bagageiro superior). Proibido usar para carregar aparelhos em voo e proibido plugar nas tomadas da aeronave.',
-      GOL: 'GOL (Vigência 04/05/2026 - Detalhe a confirmar): Classifica power banks como baterias sobressalentes na cabine até 100 Wh. A documentação geral cita até 20 baterias, mas ainda necessita confirmação sobre como aplica especificamente o teto OACI/ANAC de 2 power banks.',
-      AZUL: 'Azul (Confirmação pendente): A página oficial de bagagens não apresenta orientação específica e atualizada sobre o novo teto de 2 power banks da OACI/Portaria 21/SPO. Princípio BagagemOK: a ausência de informação não é permissão irrestrita (Status: Necessita de confirmação).',
+      LATAM: 'LATAM (Regra detalhada publicada desde abril/2026): Máximo 2 power banks de até 100 Wh. Somente na cabine, obrigatoriamente acessíveis sob o assento (proibido no bagageiro superior). Proíbe utilizar para carregar outros dispositivos durante o voo e proíbe conectar às tomadas.',
+      GOL: 'GOL (Inconsistência documental — vigência 04/05/2026): Classifica power banks como baterias sobressalentes na cabine até 100 Wh (100–160 Wh com autorização). A documentação apresenta inconsistência entre o limite geral de baterias sobressalentes (até 20) e as regras específicas de power banks (limite OACI de 2 unidades). Confirme antes de viajar.',
+      AZUL: 'Azul (Confirmação documental pendente): Ainda falta confirmação documental detalhada de sua política operacional específica para o limite de 2 power banks da OACI/ANAC. Princípio BagagemOK: ausência de detalhe não é permissão irrestrita — consulte a Azul antes do embarque.',
     },
-    internationalNotes: 'Adendo nº 1 ao Doc 9284 da OACI em vigor global desde 27/03/2026: máximo de 2 power banks por passageiro e proibição de uso ou recarga a bordo em todos os voos internacionais (EUA/TSA, Europa/EASA, etc.).',
+    internationalNotes: 'Regra internacional da OACI aplicável desde 27/03/2026: limite de 2 power banks até 100 Wh na cabine, proibido recarregar em voo e recomendação de não utilizar para carregar outros aparelhos. Na entrada no Brasil, consulte também as regras aduaneiras da Receita Federal (Bens do viajante, atualizada em 13/11/2026).',
     officialSources: [
       {
-        name: 'ANAC — Portaria Regulatória nº 21/SPO (IS 175-001M)',
+        name: 'ANAC — Regulamentação de Artigos Perigosos (Portaria 21/SPO)',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
-        documentReference: 'Portaria 21/SPO / DOU 06/04/2026',
+        documentReference: 'Portaria 21/SPO / IS 175-001M',
       },
       {
-        name: 'OACI (ICAO) — Adendo nº 1 às Instruções Técnicas Doc 9284',
+        name: 'OACI (ICAO) — Nova Regulamentação de Power Banks (Doc 9284)',
         url: 'https://www.icao.int',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'OACI',
-        documentReference: 'Doc 9284 Vigente desde 27/03/2026',
+        documentReference: 'Doc 9284 Adendo 1 (desde 27/03/2026)',
       },
       {
-        name: 'Ministério de Portos e Aeroportos — Novas Regras para Power Banks',
+        name: 'Ministério de Portos e Aeroportos — Regras de Power Banks',
         url: 'https://www.gov.br/mpor/pt-br',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
-        documentReference: 'Orientações oficiais de 20/05/2026 e 21/07/2026',
+        documentReference: 'Orientações oficiais 2026',
       },
       {
-        name: 'LATAM Airlines — Regras de Artigos Restritos 2026',
+        name: 'LATAM Airlines — Artigos Restritos',
         url: 'https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/bagagem/itens-restritos',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'LATAM',
       },
       {
         name: 'GOL — Transporte de Eletrônicos e Baterias',
         url: 'https://www.voegol.com.br/informacoes/bagagem/itens-proibidos-e-restritos',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'GOL',
       },
       {
         name: 'Azul — Bagagem e Restrições',
         url: 'https://www.voeazul.com.br/br/pt/sua-viagem/planeje-sua-viagem/bagagem/itens-proibidos',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'AZUL',
       },
     ],
-    lastVerifiedDate: '10/11/2026',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -127,17 +127,17 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Dicas para transportar eletrônicos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
       {
         name: 'LATAM — Transporte de Objetos de Valor e Eletrônicos',
         url: 'https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/bagagem',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'LATAM',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -170,11 +170,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Eletrônicos a Bordo',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -210,11 +210,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Transporte de Baterias Sobressalentes',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -247,11 +247,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Artigos de Valor',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -286,11 +286,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Orientações para Drones em Viagens',
         url: 'https://www.gov.br/anac/pt-br/assuntos/drones',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -324,17 +324,17 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Dispositivos Eletrônicos para Fumar',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
       {
         name: 'ANVISA — Regulamentação de Cigarros Eletrônicos',
         url: 'https://www.gov.br/anvisa/pt-br/assuntos/tabaco/cigarro-eletronico',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -381,23 +381,23 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Transporte de Líquidos em Voos Nacionais e Internacionais',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
       {
         name: 'LATAM Airlines — Transporte de Líquidos e Higiene',
         url: 'https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/bagagem',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'LATAM',
       },
       {
         name: 'Receita Federal — Compras em Free Shop e Líquidos',
         url: 'https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/viagens-internacionais',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'RECEITA_FEDERAL',
       },
     ],
-    lastVerifiedDate: '10/11/2026',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -433,11 +433,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Regras de Líquidos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -473,11 +473,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Transporte de Aerossóis (RBAC 175)',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -507,11 +507,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Guia de Bagagem',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -541,11 +541,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Regras para Álcool em Gel',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -579,11 +579,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Medicamentos em Viagens Aéreas',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -617,11 +617,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC & ANVISA — Medicamentos Controlados em Viagem Internacional',
         url: 'https://www.gov.br/anvisa/pt-br/assuntos/medicamentos/controlados',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -658,17 +658,17 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Transporte de Medicamentos Líquidos Especiais',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
       {
         name: 'Sociedade Brasileira de Diabetes — Viagens Aéreas',
         url: 'https://diabetes.org.br',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -698,11 +698,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Mercadorias Perigosas em Pequenas Quantidades',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -736,17 +736,17 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Transporte de Alimentos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
       {
         name: 'Ministério da Agricultura e Pecuária (MAPA) — VIGIAGRO',
         url: 'https://www.gov.br/agricultura/pt-br/assuntos/vigilancia-agropecuaria',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'MAPA',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -777,11 +777,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Isenções para Alimentos Infantis',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -827,11 +827,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Regras para Bebidas Alcoólicas em Aeronaves Civis',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -862,11 +862,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Inspeção de Segurança Aeroportuária',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -906,11 +906,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Itens Proibidos e Permitidos na Cabine (Resolução 515/2019)',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/itens-proibidos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -941,11 +941,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Instrumentos de Cutelaria e Manicure',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/itens-proibidos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -977,11 +977,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Objetos Perfurocortantes',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/itens-proibidos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1016,11 +1016,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Isqueiros e Fósforos a Bordo',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1051,11 +1051,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Artigos de Barbearia e Cutelaria',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/itens-proibidos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1085,11 +1085,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Itens Permitidos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1121,11 +1121,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Artigos Elétricos Pessoais',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1158,11 +1158,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Ferramentas de Trabalho e Artigos Restritos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/itens-proibidos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1202,11 +1202,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Transporte de Instrumentos Musicais',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1242,11 +1242,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Equipamentos Esportivos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1279,11 +1279,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Regras para Despacho de Bicicletas',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 
@@ -1313,11 +1313,11 @@ export const LUGGAGE_ITEMS: LuggageItem[] = [
       {
         name: 'ANAC — Objetos Cotidianos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
-    lastVerifiedDate: 'Janeiro 2025',
+    lastVerifiedDate: '19/11/2026',
     verificationStatus: 'verificado',
   },
 ];

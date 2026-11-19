@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Zap, ShieldCheck, AlertTriangle, XCircle, Info, ExternalLink, ShieldAlert, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Zap, ShieldCheck, AlertTriangle, XCircle, Info, ShieldAlert } from 'lucide-react';
 import { calculateWattHours, evaluateBatteryCompliance } from '../utils/rulesEngine';
 import { AirlineCode } from '../types';
 
@@ -19,6 +19,21 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
   const [quantity, setQuantity] = useState<number>(1);
   const [airline, setAirline] = useState<AirlineCode>('TODAS');
 
+  useEffect(() => {
+    if (isOpen) {
+      setMahInput(initialMah);
+    }
+  }, [initialMah, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const wh = calculateWattHours(mahInput, voltageInput);
@@ -34,59 +49,69 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden space-y-6">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="battery-calc-title"
+    >
+      <div
+        className="relative w-full max-w-2xl max-h-[92vh] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Modal Header */}
-        <div className="bg-[#102746] text-white p-6 relative">
+        <div className="bg-[#102746] text-white p-5 sm:p-6 relative shrink-0">
           <button
+            type="button"
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white cursor-pointer"
+            className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white cursor-pointer"
             aria-label="Fechar calculadora"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">
-            <Zap className="w-4 h-4 text-amber-400" />
-            <span>Matriz de Baterias & Novas Regras 2026 (Portaria ANAC 21/SPO e OACI)</span>
+          <div className="flex items-center gap-2 text-sky-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1 pr-10">
+            <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>Verificado em 19/11/2026 • OACI Doc 9284 & ANAC 21/SPO</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold font-heading">
+          <h2 id="battery-calc-title" className="text-lg sm:text-2xl font-bold font-heading pr-8">
             Calculadora de Power Banks & Baterias (Wh)
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 mt-1">
-            Verifique capacidade, quantidade permitida e regras operacionais específicas da sua companhia.
+            Verifique capacidade em Wh, limite de unidades e regras específicas de LATAM, GOL e Azul.
           </p>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-5 overflow-y-auto flex-1">
           
           {/* 2026 Regulatory Highlights Banner */}
           <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 text-xs text-[#102746] space-y-2">
             <div className="flex items-center gap-2 font-bold text-sm text-[#1976F3]">
-              <ShieldAlert className="w-4 h-4" />
-              <span>Mudança Regulamentar Internacional (Vigente em 2026)</span>
+              <ShieldAlert className="w-4 h-4 shrink-0" />
+              <span>Regra Internacional Vigente (desde 27/03/2026)</span>
             </div>
             <p className="leading-relaxed text-slate-700">
-              A <strong>OACI (Doc 9284)</strong> e a <strong>ANAC (Portaria nº 21/SPO / IS 175-001M)</strong> atualizaram as regras de carregadores portáteis:
+              A <strong>OACI (Doc 9284)</strong> e a <strong>ANAC (Portaria nº 21/SPO / IS 175-001M)</strong> consolidaram os limites para carregadores portáteis:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-800 font-medium pt-1">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#1976F3]" />
+                <span className="w-2 h-2 rounded-full bg-[#1976F3] shrink-0" />
                 <span>Máximo <strong>2 power banks</strong> por passageiro</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-rose-500" />
-                <span><strong>PROIBIDO</strong> usar para carregar em voo</span>
+                <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+                <span><strong>PROIBIDO</strong> recarregar o power bank em voo</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-rose-500" />
-                <span><strong>PROIBIDO</strong> recarregar nas tomadas</span>
+                <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+                <span>OACI recomenda não carregar aparelhos (<strong>LATAM proíbe</strong>)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#23A88A]" />
-                <span>Transporte exclusivo na cabine</span>
+                <span className="w-2 h-2 rounded-full bg-[#23A88A] shrink-0" />
+                <span>Somente na cabine (nunca despachado)</span>
               </div>
             </div>
           </div>
@@ -163,7 +188,7 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
                     key={num}
                     type="button"
                     onClick={() => setQuantity(num)}
-                    className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                    className={`flex-1 py-2 px-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                       quantity === num
                         ? num > 2
                           ? 'bg-rose-50 border-rose-400 text-rose-700 ring-2 ring-rose-200'
@@ -176,7 +201,7 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
                 ))}
               </div>
               <span className="text-[11px] text-slate-400 block">
-                Limite regulamentar: máximo de 2 unidades por passageiro.
+                Limite regulamentar OACI: máximo de 2 unidades por passageiro.
               </span>
             </div>
 
@@ -197,22 +222,22 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
                 <option value="AZUL">Azul Linhas Aéreas</option>
               </select>
               <span className="text-[11px] text-slate-400 block">
-                Cada companhia possui particularidades de acomodação.
+                Veja regras separadas para LATAM, GOL e Azul abaixo.
               </span>
             </div>
           </div>
 
           {/* Calculated Output Box */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 Capacidade calculada:
               </span>
-              <div className="text-3xl font-extrabold font-heading text-[#102746]">
-                {wh} <span className="text-lg font-bold text-[#1976F3]">Watt-hora (Wh)</span>
+              <div className="text-2xl sm:text-3xl font-extrabold font-heading text-[#102746]">
+                {wh} <span className="text-base sm:text-lg font-bold text-[#1976F3]">Watt-hora (Wh)</span>
               </div>
               <p className="text-xs text-slate-500">
-                Fórmula: ({mahInput.toLocaleString()} mAh × {voltageInput} V) ÷ 1.000 = {wh} Wh
+                Fórmula: ({mahInput.toLocaleString('pt-BR')} mAh × {voltageInput} V) ÷ 1.000 = {wh} Wh
               </p>
             </div>
 
@@ -260,7 +285,9 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
               <span>Mala de mão: {compliance.handAllowed ? 'SIM (Liberado)' : 'NÃO'}</span>
               <span>Mala despachada (Porão): {compliance.checkedAllowed ? 'SIM' : 'NÃO (Estritamente Proibido)'}</span>
               <span>Limite de unidades: {compliance.maxSparesCabine}</span>
-              <span>Uso em voo: PROIBIDO (OACI 2026)</span>
+              <span>
+                Uso em voo: {airline === 'LATAM' ? 'PROIBIDO (LATAM)' : 'Recarga proibida / OACI recomenda não usar'}
+              </span>
             </div>
           </div>
 
@@ -280,20 +307,20 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2">
             <h5 className="font-bold flex items-center gap-1.5 text-[#102746]">
               <Info className="w-4 h-4 text-[#1976F3]" />
-              <span>Regras Operacionais Oficiais de 2026</span>
+              <span>Diferenças Operacionais por Companhia (19/11/2026)</span>
             </h5>
             <ul className="list-disc list-inside space-y-1 text-slate-600">
               <li>
-                <strong>LATAM:</strong> Deve ficar acessível sob o assento à frente. Proibido colocar no bagageiro superior.
+                <strong>LATAM:</strong> Proíbe usar power banks para carregar outros dispositivos em voo e exige armazenamento acessível <strong>sob o assento</strong> (vetado no bagageiro superior).
               </li>
               <li>
-                <strong>Não pode recarregar:</strong> É vedado conectar o power bank às tomadas do avião.
+                <strong>GOL:</strong> Documentação apresenta inconsistência entre o limite geral de baterias sobressalentes (até 20) e as regras específicas de power banks.
               </li>
               <li>
-                <strong>Não pode alimentar aparelhos:</strong> Proibido usar o power bank durante todo o voo.
+                <strong>Azul:</strong> Ainda falta confirmação documental detalhada de sua política operacional; siga o teto de 2 unidades da OACI.
               </li>
               <li>
-                <strong>Despacho no portão:</strong> Se sua mala de cabine for despachada de última hora por falta de espaço, retire o power bank imediatamente.
+                <strong>Despacho no portão:</strong> Se sua mala de cabine for despachada de última hora, retire o power bank imediatamente.
               </li>
             </ul>
           </div>
@@ -301,16 +328,17 @@ export const BatteryCalculatorModal: React.FC<BatteryCalculatorModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="bg-slate-50 px-6 py-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[11px] text-slate-500">
-            <span>Fontes: Portaria ANAC 21/SPO, OACI Doc 9284 e MPor</span>
+        <div className="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+          <div className="flex items-center gap-2 text-[11px] text-slate-500 text-center sm:text-left">
+            <span>Fontes: OACI Doc 9284, Portaria ANAC 21/SPO e Cias Aéreas • Verificado em 19/11/2026</span>
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2 bg-[#102746] hover:bg-[#172B46] text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
+            className="w-full sm:w-auto px-5 py-2 bg-[#102746] hover:bg-[#172B46] text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
           >
-            Entendi as Regras de 2026
+            Entendi as Regras
           </button>
         </div>
 

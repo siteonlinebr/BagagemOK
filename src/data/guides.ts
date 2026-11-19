@@ -7,27 +7,27 @@ export const TRAVEL_GUIDES: TravelGuide[] = [
     title: 'O que levar na bagagem de mão? O guia definitivo atualizado',
     subtitle: 'Tudo o que você precisa saber para arrumar sua mala de bordo de até 10 kg ou 12 kg sem surpresas no raio-X e no portão.',
     readTimeMinutes: 5,
-    lastUpdated: 'Novembro 2026 (Auditoria Oficial)',
+    lastUpdated: '19/11/2026 (Verificado)',
     summary: 'Aprenda as regras da ANAC, a ampliação para 12 kg na LATAM e GOL, o que nunca despachar e a atenção indispensável com as tarifas Basic.',
     keyTakeaways: [
       'Garantia legal ANAC (Resolução 400): no mínimo 10 kg na mala de mão gratuita mais 1 item pessoal no Brasil.',
       'Ampliação 2026: LATAM e GOL ampliaram o limite da mala de mão para 12 kg (LATAM permite até 16 kg na Premium). Azul mantém 10 kg.',
       'Cuidado com a Tarifa Basic: passagens nas tarifas mais simples da LATAM e GOL não incluem mala de cabine gratuita (apenas item pessoal sob o assento).',
-      'Power banks em 2026: máximo de 2 unidades por passageiro, proibido despachar no porão, proibido recarregar ou usar a bordo durante o voo.',
+      'Power banks em 2026: máximo de 2 unidades por passageiro, somente na cabine, proibido recarregar em voo e recomendação OACI (proibição na LATAM) de não usar para carregar aparelhos.',
       'LATAM exige power banks guardados exclusivamente sob o assento à frente (proibido no bagageiro superior).',
     ],
     officialSources: [
       {
         name: 'ANAC — Guia do Passageiro / Bagagens',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
         documentReference: 'Resolução nº 400/2016 e Portaria 21/SPO',
       },
       {
         name: 'OACI (ICAO) — Adendo nº 1 ao Doc 9284',
         url: 'https://www.icao.int',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'OACI',
       },
     ],
@@ -68,26 +68,32 @@ Coloque sempre na sua mala de mão:
     title: 'Como preparar a mala para um voo internacional: a regra dos 100 ml',
     subtitle: 'Evite ter perfumes, cremes e cosméticos descartados no canal de segurança internacional.',
     readTimeMinutes: 6,
-    lastUpdated: 'Novembro 2026 (Auditoria Oficial)',
-    summary: 'Entenda em detalhes como funciona a regra dos 100 ml em voos internacionais, a embalagem plástica de 1 litro e as exceções médicas e infantis.',
+    lastUpdated: '19/11/2026 (Verificado)',
+    summary: 'Entenda em detalhes como funciona a regra dos 100 ml em voos internacionais, a embalagem plástica de 1 litro, exceções médicas e as normas da Receita Federal na entrada no Brasil.',
     keyTakeaways: [
       'Limite rígido: frascos com capacidade máxima de até 100 ml (3.4 oz) cada.',
       'O volume conta pela capacidade do frasco, não pela quantidade de líquido que sobrou dentro.',
       'Todos os frascos devem caber em 1 único saco plástico transparente vedável de até 1 litro (20x20 cm).',
-      'Exceções: remédios essenciais com receita e comida de bebê têm permissão especial.',
+      'Receita Federal (atualizado em 13/11/2026): regras aduaneiras sobre bens pessoais, eletrônicos e tributação na entrada no Brasil não alteram as franquias das companhias aéreas.',
     ],
     officialSources: [
       {
         name: 'ICAO / OACI — Doc 9284 & Segurança de Aviação',
         url: 'https://www.icao.int',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'OACI',
       },
       {
         name: 'ANAC — Transporte de Líquidos em Voos Internacionais',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
+      },
+      {
+        name: 'Receita Federal — Bens do Viajante (Atualizado 13/11/2026)',
+        url: 'https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/viagens-internacionais',
+        lastVerified: '19/11/2026',
+        publisher: 'RECEITA_FEDERAL',
       },
     ],
     contentMarkdown: `
@@ -104,6 +110,11 @@ Bebidas, perfumes e cosméticos com mais de 100 ml adquiridos nas lojas francas 
 - Venham acondicionados na embalagem especial lacrada pelo lojista (**STEB - Security Tamper-Evident Bag**).
 - A nota fiscal da compra daquele mesmo dia esteja visível no interior do pacote.
 - *Cuidado com conexões:* Se seu voo internacional fizer conexão em outro aeroporto onde seja necessário passar novamente pelo raio-X, as garrafas podem ser barradas se a embalagem tiver sido violada ou dependendo da regra do país de trânsito.
+
+### Regras Aduaneiras na Entrada no Brasil (Receita Federal — 13/11/2026)
+Além das normas de segurança de voo das companhias aéreas, passageiros que retornam do exterior devem observar a página oficial da **Receita Federal — Bens do Viajante** (atualizada em **13/11/2026**):
+- Trata de bagagem internacional, itens de uso pessoal, eletrônicos trazidos do exterior e regras de cota de isenção e tributação na chegada ao Brasil.
+- Essas regras aduaneiras **não alteram** o peso ou tamanho da bagagem de mão e despachada definidos pelas companhias aéreas.
     `,
   },
   {
@@ -112,7 +123,7 @@ Bebidas, perfumes e cosméticos com mais de 100 ml adquiridos nas lojas francas 
     title: 'O que acontece se a mala ultrapassar o peso ou tamanho?',
     subtitle: 'Conheça as taxas de excesso de bagagem e como evitar multas caras no aeroporto.',
     readTimeMinutes: 4,
-    lastUpdated: 'Novembro 2026 (Auditoria Oficial)',
+    lastUpdated: '19/11/2026 (Verificado)',
     summary: 'Descubra os valores cobrados por quilo excedente, diferenças entre comprar franquia antecipada e no balcão, e como evitar cobranças surpresa.',
     keyTakeaways: [
       'Bagagem de mão acima de 10 kg (Azul) ou 12 kg (LATAM/GOL) será obrigatoriamente despachada.',
@@ -124,7 +135,7 @@ Bebidas, perfumes e cosméticos com mais de 100 ml adquiridos nas lojas francas 
       {
         name: 'ANAC — Cobrança de Bagagem e Direitos',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
@@ -147,70 +158,69 @@ Se a sua mala despachada pesar mais de 23 kg no balcão de check-in:
     title: 'Baterias de lítio e power banks: Regras 2026 da OACI e ANAC',
     subtitle: 'Novas restrições: limite de 2 unidades, proibição de recarga em voo, fórmulas Wh e regras específicas de LATAM, GOL e Azul.',
     readTimeMinutes: 6,
-    lastUpdated: '10/11/2026 (Auditoria Oficial)',
-    summary: 'Guia completo com as atualizações regulatórias do Adendo 1 ao Doc 9284 da OACI e Portaria 21/SPO da ANAC (IS 175-001M). Saiba como calcular Wh e evitar apreensão no embarque.',
+    lastUpdated: '19/11/2026 (Verificado)',
+    summary: 'Guia completo com as atualizações regulatórias do Adendo 1 ao Doc 9284 da OACI e Portaria 21/SPO da ANAC (IS 175-001M). Saiba como calcular Wh e as diferenças entre LATAM, GOL e Azul.',
     keyTakeaways: [
-      'Nova regra 2026: Máximo de 2 power banks por passageiro (OACI Adendo nº 1 e ANAC Portaria nº 21/SPO).',
-      'Transporte EXCLUSIVO na bagagem de mão / cabine. Totalmente proibido no porão despachado.',
-      'Proibição estrita a bordo: NÃO é permitido recarregar power banks a bordo e NÃO é permitido usá-los para alimentar celulares/notebooks durante o voo.',
-      'LATAM exige power banks guardados exclusivamente sob o assento da frente (nunca no bagageiro superior).',
-      'GOL adota regras de baterias desde 04/05/2026 (detalhe específico do teto de 2 unidades pendente de publicação clara na página).',
-      'Azul mantém recomendação mandatória OACI de máx 2 unidades.',
-      'Fórmula: Wh = (mAh × Volts) ÷ 1.000. Até 100 Wh é o limite geral permitido sem autorização.',
+      'Limite internacional 2026: Máximo de 2 power banks por passageiro (OACI desde 27/03/2026 e ANAC Portaria nº 21/SPO).',
+      'Transporte EXCLUSIVO na bagagem de mão / cabine. Nunca na bagagem despachada.',
+      'Recarga e uso em voo: Proibido recarregar power banks durante o voo; a OACI recomenda não utilizá-los para carregar outros aparelhos a bordo.',
+      'LATAM: Proíbe utilizar para carregar outros dispositivos durante o voo e exige armazenamento acessível sob o assento (vetado no bagageiro superior).',
+      'GOL: Documentação apresenta inconsistência entre o limite geral de baterias sobressalentes (até 20) e as regras específicas de power banks.',
+      'Azul: Ainda falta confirmação documental detalhada de sua política operacional.',
+      'Fórmula: Wh = (mAh × Volts) ÷ 1.000. Até 100 Wh permitido; 100–160 Wh exige autorização; >160 Wh proibido.',
     ],
     officialSources: [
       {
-        name: 'OACI (ICAO) — Adendo nº 1 às Instruções Técnicas Doc 9284',
+        name: 'OACI (ICAO) — Nova Regulamentação de Power Banks (Doc 9284)',
         url: 'https://www.icao.int',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'OACI',
-        documentReference: 'Doc 9284 Adendo 1 (em vigor desde 27/03/2026)',
+        documentReference: 'Doc 9284 Adendo 1 (desde 27/03/2026)',
       },
       {
-        name: 'ANAC — Portaria Regulatória nº 21/SPO (IS 175-001M / DOU 06/04/2026)',
+        name: 'ANAC — Regulamentação de Artigos Perigosos (Portaria 21/SPO)',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/artigos-perigosos',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
         documentReference: 'IS 175-001 Revisão M',
       },
       {
-        name: 'LATAM Airlines — Regras de Artigos Restritos 2026',
+        name: 'LATAM Airlines — Regras de Artigos Restritos',
         url: 'https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/bagagem',
-        lastVerified: '10/11/2026',
+        lastVerified: '19/11/2026',
         publisher: 'LATAM',
       },
     ],
     contentMarkdown: `
 ### As grandes mudanças regulatórias de 2026
-Em 2026, a Organização da Aviação Civil Internacional (**OACI/ICAO**) implementou o **Adendo nº 1 às Instruções Técnicas para Transporte Seguro de Artigos Perigosos por Via Aérea (Doc 9284)**, com aplicação oficial desde 27 de março de 2026.
+Em 2026, a Organização da Aviação Civil Internacional (**OACI/ICAO**) aprovou o **Adendo nº 1 às Instruções Técnicas para Transporte Seguro de Artigos Perigosos por Via Aérea (Doc 9284)**, aplicável internacionalmente desde **27 de março de 2026**.
 
-No Brasil, a **ANAC** aprovou a revisão M da Instrução Suplementar 175-001 através da **Portaria Regulatória nº 21/SPO** (publicada no Diário Oficial da União em 06/04/2026).
+No Brasil, a **ANAC** aprovou a revisão M da Instrução Suplementar 175-001 através da **Portaria Regulatória nº 21/SPO** (publicada no DOU em 06/04/2026).
 
-### As novas condições mandatórias para Power Banks
-1. **Máximo de 2 power banks por passageiro:** Você não pode transportar mais de 2 carregadores portáteis, mesmo que ambos estejam abaixo de 100 Wh.
-2. **Exclusivamente na bagagem de mão (cabine):** O envio para o porão de bagagens despachadas é expressamente proibido devido ao risco de fogo por fuga térmica (*thermal runaway*).
-3. **Proibido recarregar durante o voo:** É proibido plugar o power bank nas tomadas ou portas USB da aeronave.
-4. **Proibido usar para carregar dispositivos em voo:** Não utilize o power bank para alimentar seu smartphone, tablet ou fones durante o voo. Mantenha-o desligado.
-5. **Proteção individual:** Os terminais e conectores devem estar protegidos contra curtos-circuitos (em case protetor, embalagem plástica individual ou com fita isolante sobre as portas).
+### As principais condições para Power Banks
+1. **Máximo de 2 power banks por passageiro:** Limite de até 100 Wh por unidade (100 a 160 Wh requer autorização da companhia; acima de 160 Wh é proibido).
+2. **Somente na bagagem de mão (cabine):** Nunca na bagagem despachada devido ao risco de fogo por fuga térmica (*thermal runaway*).
+3. **Proibido recarregar durante o voo:** Não podem ser conectados às tomadas ou portas USB da aeronave.
+4. **Uso para carregar outros aparelhos em voo:** A **OACI recomenda não utilizá-los** para carregar celulares ou notebooks durante o voo — e companhias como a **LATAM proíbem expressamente** esse uso.
+5. **Proteção individual:** Os terminais e conectores devem estar protegidos contra curto-circuitos (estojo protetor ou embalagem individual).
 
-### Como cada companhia aérea brasileira aplica a regra em 2026:
-- **LATAM (Regra detalhada publicada):** Desde abril de 2026, permite no máximo dois power banks de até 100 Wh cada, exclusivamente sob o assento dianteiro. **A LATAM proíbe colocar power banks no bagageiro superior (overhead bin)** para que a tripulação possa identificar prontamente qualquer elevação térmica anormal. Se sua mala de bordo for retirada no portão por falta de espaço, você é obrigado a retirar o power bank antes de entregá-la.
-- **GOL (Detalhe a confirmar):** Novas regras de baterias vigoram desde 04/05/2026. Baterias sobressalentes e power banks viajam na cabine até 100 Wh. A documentação detalhada ainda cita regra genérica de até 20 baterias sobressalentes, pendente de detalhamento expresso quanto ao teto individual de 2 power banks.
-- **Azul (Confirmação pendente):** A página da companhia não detalha expressamente o teto de 2 unidades do Adendo nº 1 da OACI. Pelo princípio BagagemOK, ausência de informação não é permissão irrestrita; consulte a Azul com antecedência caso precise transportar mais de um carregador.
+### Diferenças importantes entre as companhias brasileiras
+- **LATAM (Regra detalhada publicada):** Permite no máximo 2 power banks de até 100 Wh cada, proíbe utilizar power banks para carregar outros dispositivos durante o voo e exige armazenamento acessível **sob o assento dianteiro** (proibido no compartimento superior). Se a mala de bordo for despachada no portão, retire o power bank imediatamente.
+- **GOL (Inconsistência documental):** Regras de baterias atualizadas desde 04/05/2026, porém a documentação apresenta inconsistência entre o limite geral de baterias sobressalentes (até 20) e as regras específicas de power banks (teto OACI de 2 unidades). Confirme antes de embarcar.
+- **Azul (Confirmação documental pendente):** Ainda falta confirmação documental detalhada de sua política operacional específica para power banks. Pelo princípio do BagagemOK, ausência de detalhe não é permissão irrestrita; siga o teto de 2 unidades e consulte a companhia.
 
 ### A Fórmula do Watt-hora (Wh)
 A norma avalia a energia em **Watt-hora (Wh)**:
-$$\\text{Wh} = \\frac{\\text{capacidade em mAh} \\times \\text{tensão nominal em Volts}}{1.000}$$
+> Fórmula: **Wh = (capacidade em mAh × tensão nominal em Volts) ÷ 1.000**
 
-*Exemplo:*
-- Power bank de **20.000 mAh** a **3.7 V**:
-  $$(20.000 \\times 3.7) \\div 1.000 = 74\\text{ Wh}$$
-- Está abaixo de 100 Wh, portanto permitido para embarque na cabine!
+*Exemplo prático:*
+- Um power bank de **20.000 mAh** com célula de íon de lítio de **3.7 V**: **(20.000 × 3.7) ÷ 1.000 = 74 Wh**.
+- Como 74 Wh é menor ou igual a 100 Wh, está liberado na cabine (até 2 unidades)!
 
-### As três faixas de capacidade:
-1. **Até 100 Wh:** Permitido na cabine (máximo 2 unidades).
-2. **De 100.1 Wh a 160 Wh:** Exige autorização prévia da companhia aérea.
-3. **Acima de 160 Wh:** Totalmente proibido em voos comerciais de passageiros.
+### As três faixas de capacidade
+1. **Até 100 Wh:** Permitido na bagagem de mão (máximo 2 unidades).
+2. **De 100.1 Wh a 160 Wh:** Exige autorização prévia da companhia aérea, conforme condições aplicáveis.
+3. **Acima de 160 Wh:** Proibido em voos comerciais de passageiros.
     `,
   },
   {
@@ -219,7 +229,7 @@ $$\\text{Wh} = \\frac{\\text{capacidade em mAh} \\times \\text{tensão nominal e
     title: 'Como transportar medicamentos, insulina e seringas no avião',
     subtitle: 'Requisitos legais para viajar com medicamentos comuns, controlados e injetáveis com tranquilidade.',
     readTimeMinutes: 5,
-    lastUpdated: 'Janeiro 2025',
+    lastUpdated: '19/11/2026 (Verificado)',
     summary: 'Orientações práticas para o embarque de remédios, receitas médicas válidas, regras para insulina e transporte em bolsas térmicas.',
     keyTakeaways: [
       'Leve sempre todos os remédios essenciais na bagagem de mão.',
@@ -231,13 +241,13 @@ $$\\text{Wh} = \\frac{\\text{capacidade em mAh} \\times \\text{tensão nominal e
       {
         name: 'ANVISA — Medicamentos em Viagens',
         url: 'https://www.gov.br/anvisa/pt-br/assuntos/medicamentos',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
       {
         name: 'ANAC — Passageiros com Necessidade de Assistência Especial (PNAE)',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/pnae',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
@@ -262,7 +272,7 @@ Para fármacos controlados:
     title: 'Diferença prática entre Item Pessoal e Bagagem de Mão',
     subtitle: 'Entenda o que você pode levar além da malinha de 10 kg sem pagar nada a mais.',
     readTimeMinutes: 4,
-    lastUpdated: 'Janeiro 2025',
+    lastUpdated: '19/11/2026 (Verificado)',
     summary: 'Aprenda onde posicionar cada volume no avião, limites de tamanho de mochilas e como maximizar seu espaço de bordo.',
     keyTakeaways: [
       'Você tem direito a 2 volumes na cabine: 1 mala de mão (compartimento superior) + 1 item pessoal (embaixo do assento à frente).',
@@ -274,7 +284,7 @@ Para fármacos controlados:
       {
         name: 'ANAC — Franquia de Bagagem de Mão',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026',
         publisher: 'ANAC',
       },
     ],
@@ -304,7 +314,7 @@ Dessa forma, você não precisará ficar levantando durante o voo para abrir o b
     title: 'Como medir e pesar sua mala corretamente em casa',
     subtitle: 'Passo a passo com fita métrica e balança caseira para não ser surpreendido no check-in.',
     readTimeMinutes: 4,
-    lastUpdated: 'Janeiro 2025',
+    lastUpdated: '19/11/2026 (Verificado)',
     summary: 'Dicas práticas para medir altura, largura, profundidade com rodinhas inclusas e como calcular a soma das dimensões lineares de 158 cm.',
     keyTakeaways: [
       'Sempre meça com a mala já cheia e fechada, incluindo rodinhas e alça superior.',
@@ -316,7 +326,7 @@ Dessa forma, você não precisará ficar levantando durante o voo para abrir o b
       {
         name: 'ANAC — Dicas para Bagagens',
         url: 'https://www.gov.br/anac/pt-br/assuntos/passageiros/bagagens',
-        lastVerified: 'Janeiro 2025',
+        lastVerified: '19/11/2026 (Verificado)',
         publisher: 'ANAC',
       },
     ],
@@ -329,16 +339,16 @@ Dessa forma, você não precisará ficar levantando durante o voo para abrir o b
 
 ### O que são os 158 cm lineares da mala despachada?
 A maioria das companhias aéreas do mundo e brasileiras (LATAM, GOL, Azul) define que a bagagem despachada comum não pode ultrapassar **158 cm na soma das três dimensões**:
-$$\\text{Soma Linear} = \\text{Altura} + \\text{Largura} + \\text{Profundidade}$$
+> Fórmula: **Soma Linear = Altura + Largura + Profundidade**
 
 *Exemplo:* Uma mala grande medindo 75 cm de altura + 50 cm de largura + 30 cm de profundidade = **155 cm**. Está perfeitamente dentro do limite regulamentar!
 
 ### Truque caseiro para pesar sem balança de gancho
 Se você não tiver uma balança digital de mala portátil:
 1. Suba na balança do seu banheiro e anote seu peso (ex: 70 kg).
-2. Pegue a mala no colo e suba na balança novamente (ex: 79.5 kg).
-3. Subtraia os dois valores: $79.5 - 70 = 9.5\\text{ kg}$.
-Sua mala de mão está abaixo do limite de 10 kg e aprovada para viajar!
+2. Pegue a mala no colo e suba na balança novamente (ex: 79,5 kg).
+3. Subtraia os dois valores: **79,5 − 70 = 9,5 kg**.
+Sua mala de mão está abaixo dos limites de 10 kg (Azul) e 12 kg (LATAM e GOL) e aprovada para viajar!
     `,
   },
 ];

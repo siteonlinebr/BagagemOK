@@ -73,7 +73,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section className="relative pt-6 pb-12 lg:pt-10 lg:pb-16 overflow-hidden">
+    <section className="relative pt-6 pb-12 lg:pt-10 lg:pb-16 overflow-x-clip">
       {/* Background soft ambient highlights */}
       <div className="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-blue-100/50 blur-3xl pointer-events-none" />
       <div className="absolute top-1/2 left-0 -ml-40 w-80 h-80 rounded-full bg-sky-100/40 blur-3xl pointer-events-none" />
@@ -120,8 +120,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {/* Search Field Input */}
               <form onSubmit={handleSearchSubmit} className="relative">
                 <div className="relative flex items-center">
-                  <div className="absolute left-4 pointer-events-none text-[#718096]">
-                    <Search className="w-5 h-5 text-[#1976F3]" />
+                  <div className="absolute left-3.5 sm:left-4 pointer-events-none text-[#718096]">
+                    <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#1976F3]" />
                   </div>
                   <input
                     ref={inputRef}
@@ -133,11 +133,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     }}
                     onFocus={() => setShowSuggestions(true)}
                     placeholder="Pesquise um item: power bank, perfume, remédio..."
-                    className="w-full pl-12 pr-32 py-3.5 bg-slate-50/80 hover:bg-slate-50 focus:bg-white text-[#172B46] placeholder:text-slate-400 rounded-xl border border-slate-200 focus:border-[#1976F3] focus:ring-3 focus:ring-[#1976F3]/15 text-sm sm:text-base transition-all outline-hidden"
+                    className="w-full pl-10 sm:pl-12 pr-24 sm:pr-32 py-3 sm:py-3.5 bg-slate-50/80 hover:bg-slate-50 focus:bg-white text-[#172B46] placeholder:text-slate-400 rounded-xl border border-slate-200 focus:border-[#1976F3] focus:ring-3 focus:ring-[#1976F3]/15 text-sm sm:text-base transition-all outline-hidden"
                   />
                   <button
                     type="submit"
-                    className="absolute right-1.5 top-1.5 bottom-1.5 px-4 sm:px-5 bg-[#1976F3] hover:bg-[#1664d1] active:bg-[#1253af] text-white rounded-lg font-medium text-sm flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
+                    className="absolute right-1.5 top-1.5 bottom-1.5 px-3 sm:px-5 bg-[#1976F3] hover:bg-[#1664d1] active:bg-[#1253af] text-white rounded-lg font-medium text-xs sm:text-sm flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
                   >
                     <Search className="w-4 h-4 hidden sm:inline" />
                     <span>Pesquisar</span>
@@ -189,7 +189,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </form>
 
               {/* Sub-Filters: Tipo de voo, Companhia aérea, Onde vai levar */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 border-t border-slate-100">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 border-t border-slate-100">
                 {/* 1. Tipo de voo */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-[#172B46] block">
@@ -199,7 +199,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <button
                       type="button"
                       onClick={() => setFlightType('domestico')}
-                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all ${
+                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all whitespace-nowrap cursor-pointer ${
                         flightType === 'domestico'
                           ? 'bg-[#1976F3] text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -210,7 +210,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <button
                       type="button"
                       onClick={() => setFlightType('internacional')}
-                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all ${
+                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all whitespace-nowrap cursor-pointer ${
                         flightType === 'internacional'
                           ? 'bg-[#1976F3] text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -251,18 +251,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <button
                       type="button"
                       onClick={() => setLocation('mao')}
-                      className={`flex-1 py-1.5 px-1.5 text-xs font-medium rounded-md transition-all ${
+                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all whitespace-nowrap cursor-pointer ${
                         location === 'mao'
                           ? 'bg-[#1976F3] text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      Bagagem de mão
+                      Mão
                     </button>
                     <button
                       type="button"
                       onClick={() => setLocation('despachada')}
-                      className={`flex-1 py-1.5 px-1.5 text-xs font-medium rounded-md transition-all ${
+                      className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all whitespace-nowrap cursor-pointer ${
                         location === 'despachada'
                           ? 'bg-[#1976F3] text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -296,10 +296,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* International Flight Alert Banner if selected */}
             {flightType === 'internacional' && (
-              <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 text-amber-900 px-4 py-2.5 rounded-xl text-xs">
+              <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 text-amber-900 px-4 py-2.5 rounded-xl text-xs leading-relaxed">
                 <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-semibold">Regra de voo internacional ativa:</span> Em voos para o exterior ou conexões internacionais, todos os líquidos na mala de mão devem ter no máximo 100 ml por frasco em saco plástico transparente de 1 litro.
+                  <span className="font-semibold">Regra de voo internacional ativa:</span> Líquidos na bagagem de mão devem estar em frascos de até 100 ml dentro de saco plástico transparente de 1 litro. Na volta ao Brasil, consulte também as regras aduaneiras da{' '}
+                  <a
+                    href="https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/viagens-internacionais"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline font-semibold hover:text-amber-950"
+                  >
+                    Receita Federal — Bens do viajante (atualizado em 13/11/2026)
+                  </a>.
                 </div>
               </div>
             )}

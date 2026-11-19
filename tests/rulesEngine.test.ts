@@ -123,6 +123,27 @@ const checkedOk = checkLuggageCompliance({
 });
 assert(checkedOk.isCompliant, 'Mala despachada de 150 cm e 22.8 kg na Azul deve ser aprovada');
 
+// Personal Item weight check on LATAM (max 10 kg)
+const personalLatamOk = checkLuggageCompliance({
+  heightCm: 44,
+  widthCm: 34,
+  depthCm: 19,
+  weightKg: 9.5,
+  airlineCode: 'LATAM',
+  luggageType: 'item_pessoal',
+});
+assert(personalLatamOk.isCompliant && personalLatamOk.limitWeight === 10, 'Item pessoal de 9.5 kg na LATAM deve ser aprovado (limite 10 kg)');
+
+const personalLatamOverweight = checkLuggageCompliance({
+  heightCm: 44,
+  widthCm: 34,
+  depthCm: 19,
+  weightKg: 11.2,
+  airlineCode: 'LATAM',
+  luggageType: 'item_pessoal',
+});
+assert(!personalLatamOverweight.isCompliant && personalLatamOverweight.status === 'excede_peso', 'Item pessoal de 11.2 kg na LATAM deve falhar com excede_peso');
+
 // 3. Test Synonyms and Search Engine
 console.log('\n--- 3. Testes do Sistema de Busca e Sinônimos ---');
 const searchPowerBank = searchLuggageItems({ query: 'carregador portátil' });
@@ -142,7 +163,7 @@ assert(LUGGAGE_ITEMS.length >= 30, `Base deve conter pelo menos 30 itens catalog
 for (const item of LUGGAGE_ITEMS) {
   assert(!!item.id, `Item ${item.name} deve ter ID único`);
   assert(item.officialSources.length > 0, `Item ${item.name} deve possuir fontes oficiais verificadas`);
-  assert(!!item.lastVerifiedDate, `Item ${item.name} deve ter data de verificação`);
+  assert(item.lastVerifiedDate === '19/11/2026', `Item ${item.name} deve ter data de verificação 19/11/2026`);
   assert(!!item.handLuggage.summary, `Item ${item.name} deve ter resumo para mala de mão`);
   assert(!!item.checkedLuggage.summary, `Item ${item.name} deve ter resumo para mala despachada`);
 }
@@ -152,5 +173,6 @@ assert(AIRLINES_DATA.LATAM.handLuggage.maxWeightKg === 12, 'LATAM deve ter franq
 assert(AIRLINES_DATA.LATAM.handLuggage.premiumWeightKg === 16, 'LATAM deve ter franquia Premium de 16 kg na mão (2026)');
 assert(AIRLINES_DATA.GOL.handLuggage.maxWeightKg === 12, 'GOL deve ter franquia de 12 kg na mão (2026)');
 assert(AIRLINES_DATA.AZUL.handLuggage.maxWeightKg === 10, 'Azul deve manter franquia de 10 kg na mão');
+assert(AIRLINES_DATA.LATAM.lastVerifiedDate === '19/11/2026', 'Data verificada das cias deve ser 19/11/2026');
 
 console.log('\n🎉 TODOS OS TESTES PASSARAM COM SUCESSO!\n');

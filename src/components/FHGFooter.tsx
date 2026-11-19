@@ -140,11 +140,12 @@ export const FHGFooter: React.FC<FHGFooterProps> = ({
             </p>
             {onOpenReport && (
               <button
+                type="button"
                 onClick={onOpenReport}
                 className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 border border-emerald-500/30 font-semibold transition-colors cursor-pointer"
               >
                 <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Ver Relatório Oficial (10/11/2026)</span>
+                <span>Ver Resumo Oficial (19/11/2026)</span>
               </button>
             )}
           </div>

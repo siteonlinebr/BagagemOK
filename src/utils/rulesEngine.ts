@@ -130,29 +130,29 @@ export function evaluateBatteryCompliance(
     };
   }
 
-  // Airline specific advice
+  // Airline specific advice (19/11/2026 verified)
   let airlineAdvice = '';
   if (airlineCode === 'LATAM') {
-    airlineAdvice = 'LATAM (Regra 2026): O power bank DEVE permanecer acessível sob o assento dianteiro. É proibido guardar no bagageiro superior. Proibido usar ou recarregar a bordo.';
+    airlineAdvice = 'LATAM (Regra detalhada publicada): O power bank DEVE permanecer acessível sob o assento dianteiro (proibido no compartimento superior). A LATAM proíbe usar para carregar outros dispositivos durante o voo e proíbe conectar às tomadas da aeronave.';
   } else if (airlineCode === 'GOL') {
-    airlineAdvice = 'GOL (Regra 2026): Vigente desde 04/05/2026. Detalhe a confirmar: a regra geral da GOL cita até 20 baterias sobressalentes, pendente harmonização textual explícita do teto de 2 unidades.';
+    airlineAdvice = 'GOL (Inconsistência documental — vigência 04/05/2026): A documentação da GOL apresenta inconsistência entre o limite geral de baterias sobressalentes (até 20) e as regras específicas de power banks (limite OACI/ANAC de 2 unidades). Confirme antes de embarcar.';
   } else if (airlineCode === 'AZUL') {
-    airlineAdvice = 'Azul: Confirmação pendente de publicação detalhada na página oficial. A ausência de informação não é permissão irrestrita. Consulte a Azul antes do embarque.';
+    airlineAdvice = 'Azul (Confirmação documental pendente): Ainda falta confirmação documental detalhada de sua política operacional para power banks. A ausência de detalhe não é permissão irrestrita — consulte a Azul antes do embarque.';
   }
 
   if (wh <= 100) {
     return {
       wh,
       status: 'permitido_com_condicoes',
-      title: 'Permitido na cabine (Novas regras 2026)',
-      description: `Baterias e power banks de até 100 Wh (${wh} Wh) são permitidos na bagagem de mão até o teto de 2 unidades por passageiro. ATENÇÃO: É estritamente PROIBIDO recarregar o power bank a bordo e PROIBIDO usá-lo para alimentar celulares ou notebooks durante o voo!`,
-      badgeText: 'Liberado na mão (< 100 Wh, máx 2)',
+      title: 'Permitido na cabine (Regras 2026 — até 100 Wh)',
+      description: `Baterias e power banks de até 100 Wh (${wh} Wh) são permitidos exclusivamente na bagagem de mão (limite de 2 unidades por passageiro). É proibido recarregar o power bank durante o voo. A OACI recomenda não utilizá-lo para carregar outros aparelhos a bordo — e na LATAM esse uso é expressamente proibido.`,
+      badgeText: 'Liberado na mão (≤ 100 Wh, máx 2)',
       handAllowed: true,
       checkedAllowed: false,
       maxSparesCabine: 'Máximo 2 power banks por passageiro',
       airlineApprovalRequired: false,
-      inFlightUsageAllowed: false, // Nova regra 2026
-      rechargingInFlightAllowed: false, // Nova regra 2026
+      inFlightUsageAllowed: false,
+      rechargingInFlightAllowed: false,
       tier: 'free',
       airlineSpecificAdvice: airlineAdvice,
     };
@@ -162,12 +162,12 @@ export function evaluateBatteryCompliance(
     return {
       wh,
       status: 'necessita_confirmacao',
-      title: 'Aprovação prévia da companhia obrigatória (100–160 Wh)',
-      description: `Entre 100.1 Wh e 160 Wh (${wh} Wh), a bateria só pode viajar na cabine com AUTORIZAÇÃO EXPRESSA da companhia aérea antes do check-in. Proibido despachar no porão. Proibido uso ou recarga a bordo.`,
+      title: 'Autorização prévia da companhia obrigatória (100–160 Wh)',
+      description: `Entre 100.1 Wh e 160 Wh (${wh} Wh), o transporte exige AUTORIZAÇÃO EXPRESSA da companhia aérea antes do embarque, conforme as condições aplicáveis. Somente na bagagem de mão (proibido despachar) e proibido recarregar em voo.`,
       badgeText: 'Exige autorização (100–160 Wh)',
       handAllowed: true,
       checkedAllowed: false,
-      maxSparesCabine: 'Máximo 2 unidades com autorização formal',
+      maxSparesCabine: 'Máximo 2 unidades com autorização da companhia',
       airlineApprovalRequired: true,
       inFlightUsageAllowed: false,
       rechargingInFlightAllowed: false,
@@ -297,21 +297,34 @@ export function checkLuggageCompliance(params: {
     const limitH = limits.dimensionsCm.height;
     const limitW = limits.dimensionsCm.width;
     const limitD = limits.dimensionsCm.depth;
-    const limitWeight = 10; // usually fits with hand luggage
+    const limitWeight = limits.maxWeightKg || 0;
 
     const diffH = heightCm - limitH;
     const diffW = widthCm - limitW;
     const diffD = depthCm - limitD;
-    const diffWeight = weightKg > 0 ? weightKg - limitWeight : 0;
+    const diffWeight = limitWeight > 0 && weightKg > 0 ? weightKg - limitWeight : 0;
 
     const sizeExceeded = diffH > 0 || diffW > 0 || diffD > 0;
+    const weightExceeded = limitWeight > 0 && weightKg > limitWeight;
+
+    let status: DimensionCheckResult['status'] = 'aprovado';
+    let message = `Item pessoal aprovado para ir sob a poltrona na ${airline.name}!`;
+
+    if (sizeExceeded && weightExceeded) {
+      status = 'excede_ambos';
+      message = `Seu item pessoal excede as medidas para caber sob o assento e o limite de peso de ${limitWeight} kg da ${airline.name}.`;
+    } else if (sizeExceeded) {
+      status = 'excede_tamanho';
+      message = 'Seu item pessoal excede as medidas para caber embaixo do assento dianteiro.';
+    } else if (weightExceeded) {
+      status = 'excede_peso';
+      message = `Seu item pessoal excede o limite de peso de ${limitWeight} kg publicado pela ${airline.name}.`;
+    }
 
     return {
-      isCompliant: !sizeExceeded,
-      status: sizeExceeded ? 'excede_tamanho' : 'aprovado',
-      message: sizeExceeded
-        ? 'Seu item pessoal excede as medidas para caber embaixo do assento dianteiro.'
-        : 'Item pessoal aprovado para ir sob a poltrona na ' + airline.name + '!',
+      isCompliant: !sizeExceeded && !weightExceeded,
+      status,
+      message,
       diffHeight: diffH,
       diffWidth: diffW,
       diffDepth: diffD,
@@ -322,7 +335,7 @@ export function checkLuggageCompliance(params: {
       limitHeight: limitH,
       limitWidth: limitW,
       limitDepth: limitD,
-      limitWeight: 0,
+      limitWeight,
       airlineName: airline.name,
       airlineNotes: limits.description,
     };

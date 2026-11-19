@@ -56,16 +56,16 @@ export const Header: React.FC<HeaderProps> = ({
               aria-label="BagagemOK Início"
             >
               {/* Suitcase Logo Icon with Checkmark */}
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#102746] to-[#1976F3] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform duration-200">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#102746] to-[#1976F3] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform duration-200 shrink-0">
                 <div className="relative">
-                  <Luggage className="w-5 h-5 text-white stroke-[2.2]" />
+                  <Luggage className="w-4 h-4 sm:w-5 sm:h-5 text-white stroke-[2.2]" />
                   <span className="absolute -bottom-1 -right-1 bg-[#23A88A] text-white rounded-full w-3.5 h-3.5 flex items-center justify-center text-[9px] font-bold border-2 border-white">
                     ✓
                   </span>
                 </div>
               </div>
               <div className="flex items-center">
-                <span className="text-2xl font-bold font-heading tracking-tight text-[#102746]">
+                <span className="text-xl sm:text-2xl font-bold font-heading tracking-tight text-[#102746]">
                   Bagagem<span className="text-[#1976F3]">OK</span>
                 </span>
               </div>
@@ -98,23 +98,25 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right Action Zone */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Relatório Oficial 10/11/2026 */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            {/* Relatório Oficial 19/11/2026 */}
             {onOpenReport && (
               <button
+                type="button"
                 onClick={onOpenReport}
-                className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors cursor-pointer"
-                title="Relatório de monitoramento oficial (10/11/2026)"
+                className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors cursor-pointer whitespace-nowrap"
+                title="Resumo atualizado e fontes oficiais (19/11/2026)"
               >
                 <FileCheck2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Auditoria 10/11/2026</span>
+                <span>Verificado 19/11/2026</span>
               </button>
             )}
 
             {/* Minhas Consultas & Mala */}
             <button
+              type="button"
               onClick={() => handleNavClick('minhas-consultas')}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap cursor-pointer ${
                 activeTab === 'minhas-consultas'
                   ? 'text-[#1976F3] bg-[#1976F3]/8 font-semibold'
                   : 'text-[#172B46] hover:text-[#1976F3] hover:bg-slate-50'
@@ -122,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
               title="Minhas consultas e lista de mala"
             >
               <Clock className="w-4 h-4 text-[#718096]" />
-              <span className="hidden sm:inline">Minhas consultas</span>
+              <span className="hidden md:inline">Minhas consultas</span>
               {(savedQueriesCount > 0 || packingItemsCount > 0) && (
                 <span className="bg-[#1976F3] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-full leading-none">
                   {packingItemsCount || savedQueriesCount}
@@ -132,22 +134,25 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Consultar agora CTA button as in mockup */}
             <button
+              type="button"
               onClick={() => {
                 if (activeTab !== 'inicio' && activeTab !== 'consultar') {
                   handleNavClick('consultar');
                 }
                 onOpenSearchFocus();
               }}
-              className="flex items-center gap-2 bg-[#1976F3] hover:bg-[#1664d1] active:bg-[#1253af] text-white px-4 py-2.5 rounded-xl font-medium text-sm shadow-sm hover:shadow transition-all whitespace-nowrap cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 bg-[#1976F3] hover:bg-[#1664d1] active:bg-[#1253af] text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm shadow-sm hover:shadow transition-all whitespace-nowrap cursor-pointer"
             >
-              <Search className="w-4 h-4" />
-              <span>Consultar agora</span>
+              <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="sm:hidden">Consultar</span>
+              <span className="hidden sm:inline">Consultar agora</span>
             </button>
 
             {/* Mobile Menu Button */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-[#172B46] hover:bg-slate-100 focus:outline-hidden"
+              className="lg:hidden p-2 rounded-lg text-[#172B46] hover:bg-slate-100 focus:outline-hidden cursor-pointer"
               aria-label="Abrir menu de navegação"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -199,6 +204,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {onOpenReport && (
             <button
+              type="button"
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenReport();
@@ -207,10 +213,10 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <div className="flex items-center gap-3">
                 <FileCheck2 className="w-4 h-4 text-emerald-600" />
-                <span>Relatório Oficial 10/11/2026</span>
+                <span>Resumo Verificado 19/11/2026</span>
               </div>
               <span className="text-[10px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded-md">
-                Auditoria
+                Oficial
               </span>
             </button>
           )}

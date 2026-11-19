@@ -43,7 +43,7 @@ export default function App() {
   const [batteryModalOpen, setBatteryModalOpen] = useState(false);
   const [batteryInitialMah, setBatteryInitialMah] = useState(20000);
 
-  // Official Monitoring Report Modal state (10/11/2026)
+  // Official Monitoring Report Modal state (19/11/2026)
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
   // Counters for Header badge
@@ -196,9 +196,7 @@ export default function App() {
                       Baterias de Lítio e Power Banks
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-                      Power banks e baterias avulsas <strong>NUNCA</strong> podem ser despachados no porão 
-                      por risco de incêndio. A capacidade permitida na mala de mão é de até <strong>100 Wh</strong> 
-                      (cerca de 27.000 mAh a 3.7V).
+                      Pela regra internacional da <strong>OACI (desde 27/03/2026)</strong>, cada passageiro pode levar no máximo <strong>2 power banks</strong> de até <strong>100 Wh</strong> somente na bagagem de mão (<strong>nunca despachados</strong>). Não podem ser recarregados em voo; a OACI recomenda não usá-los para carregar aparelhos e a <strong>LATAM proíbe expressamente</strong>.
                     </p>
                   </div>
                   <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 justify-end">
@@ -241,15 +239,16 @@ export default function App() {
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => setReportModalOpen(true)}
                     className="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer shrink-0"
                   >
                     <FileCheck2 className="w-4 h-4 text-emerald-600" />
-                    <span>Ver Relatório Oficial (10/11/2026)</span>
+                    <span>Ver Resumo Oficial (19/11/2026)</span>
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                     <span className="font-bold text-sm text-[#102746] block">ANAC & OACI</span>
                     <p className="text-xs text-slate-600">
@@ -267,9 +266,25 @@ export default function App() {
                   </div>
 
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                    <span className="font-bold text-sm text-[#102746] block">Receita Federal</span>
+                    <p className="text-xs text-slate-600">
+                      Bens do viajante (atualizado em 13/11/2026): regras aduaneiras e tributação internacional.
+                    </p>
+                    <a
+                      href="https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/viagens-internacionais"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-[#1976F3] font-semibold hover:underline"
+                    >
+                      <span>gov.br/receitafederal</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                     <span className="font-bold text-sm text-[#102746] block">LATAM Airlines</span>
                     <p className="text-xs text-slate-600">
-                      Franquia 12 kg (Economy) / 16 kg (Premium), regras de baterias sob o assento e tarifas Basic/Plus.
+                      Franquia 12 kg (Economy) / 16 kg (Premium), power banks sob o assento e tarifas Basic/Plus.
                     </p>
                     <a
                       href="https://www.latamairlines.com/br/pt/experiencia/prepare-sua-viagem/bagagem"
@@ -285,7 +300,7 @@ export default function App() {
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                     <span className="font-bold text-sm text-[#102746] block">GOL Linhas Aéreas</span>
                     <p className="text-xs text-slate-600">
-                      Mala de cabine 12 kg (55x35x25 cm), item pessoal 10 kg (43x32x22 cm) e regras de baterias 2026.
+                      Mala de cabine 12 kg (55×35×25 cm), item pessoal 10 kg e ponto de atenção em baterias.
                     </p>
                     <a
                       href="https://www.voegol.com.br/informacoes/bagagem"
@@ -301,7 +316,7 @@ export default function App() {
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                     <span className="font-bold text-sm text-[#102746] block">Azul Linhas Aéreas</span>
                     <p className="text-xs text-slate-600">
-                      Franquia de 10 kg na cabine, regras da frota Azul Conecta e tarifas Azul/MaisAzul.
+                      Franquia de 10 kg na cabine, regras Azul Conecta e política operacional em monitoramento.
                     </p>
                     <a
                       href="https://www.voeazul.com.br/br/pt/sua-viagem/planeje-sua-viagem/bagagem"
@@ -316,12 +331,13 @@ export default function App() {
                 </div>
 
                 <div className="text-[11px] text-slate-500 border-t border-slate-100 pt-3 flex flex-wrap items-center justify-between gap-2">
-                  <span>Base de regras auditada e verificada pelo <strong>Relatório de Monitoramento Oficial de 10/11/2026</strong>.</span>
+                  <span>Base de regras verificada pelo <strong>Resumo Oficial de Monitoramento de 19/11/2026</strong>.</span>
                   <button
+                    type="button"
                     onClick={() => setReportModalOpen(true)}
                     className="text-[#1976F3] font-semibold hover:underline cursor-pointer"
                   >
-                    Abrir relatório completo &rarr;
+                    Abrir resumo atualizado &rarr;
                   </button>
                 </div>
               </div>
@@ -335,6 +351,7 @@ export default function App() {
         {activeTab === 'consultar' && (
           <CatalogView
             initialQuery={searchQuery}
+            initialCategory={selectedCategory}
             onOpenBatteryCalc={handleOpenBatteryCalc}
             onAddToPackingList={handleAddToPackingList}
           />
@@ -360,6 +377,10 @@ export default function App() {
         {/* Tab 6: Minhas Consultas & Mala Pessoal */}
         {activeTab === 'minhas-consultas' && (
           <MyLuggageView
+            onDataChange={() => {
+              setSavedQueriesCount(getSavedQueries().length);
+              setPackingItemsCount(getPackingChecklist().length);
+            }}
             onSearchItemName={(name) => {
               setSearchQuery(name);
               const match = LUGGAGE_ITEMS.find((i) => i.name.toLowerCase().includes(name.toLowerCase()));
@@ -382,7 +403,7 @@ export default function App() {
         initialMah={batteryInitialMah}
       />
 
-      {/* Official Monitoring Report Modal (10/11/2026) */}
+      {/* Official Monitoring Report Modal (19/11/2026) */}
       <MonitoringReportModal
         isOpen={reportModalOpen}
         onClose={() => setReportModalOpen(false)}
